@@ -18,45 +18,81 @@
 
         let score = 0;
         let wicket = 0;
+        let ballWise = [];
+        let hit = 0;
 
-       
-        
-        function addNum(num){
-            if(wicket <10)
-            score += num;
-            rootElement.render(<App/>);
-        }
-        function wicketNum(){
-            
-            if(wicket !== 10){
 
-                wicket += 1;
-            }
+
+
+        function addNum(num) {
+            hit = num;
             rootElement.render(<App />);
-            
+            console.log(hit);
+        }
+        function wicketNum() {
+
+            hit = "W"
+            rootElement.render(<App />);
+
 
         }
 
+
+        const ButtonFun = () => (
+
+            <div>
+                <button onClick={() => addNum(0)}>0</button>
+                <button onClick={() => addNum(1)}>1</button>
+                <button onClick={() => addNum(2)}>2</button>
+                <button onClick={() => addNum(3)}>3</button>
+                <button onClick={() => addNum(4)}>4</button>
+                <button onClick={() => addNum(5)}>5</button>
+                <button onClick={() => addNum(6)}>6</button>
+                <button onClick={wicketNum}>wickets</button>
+            </div>
+
+        )
+
+        const Result = () => (
+            <div>
+                {ballWise.map((res, index) => (
+                    <>
+                    {index %6 ===0 ? <br/>:null} 
+                    <span key={index}>{res ===0 ?<strong>.</strong> :res }</span>&nbsp;&nbsp;&nbsp;
+                    </>
+                ))}
+
+            </div>
+        )
         
+        function handlesubmit(event){
+            event.preventDefault();
+        }
+
+        const Form = () =>(
+            <>
+            <form onSubmit ={handlesubmit}>
+                <input value = {hit} />&nbsp;&nbsp;&nbsp;
+                <input />
+                <button>Submit</button>
+               
+            </form>
+            <hr/>
+            </>
+        )
+ 
 
         const App = () => (
             <>
                 <h1>SCORE KEEPER </h1>
                 <h2>SCORE: {score}/{wicket}</h2>
-                <div>
-                    <button onClick = {() => addNum(1)}>1</button>
-                    <button onClick = {() => addNum(2)}>2</button>
-                    <button onClick = {() => addNum(3)}>3</button>
-                    <button onClick = {() => addNum(4)}>4</button>
-                    <button onClick = {() => addNum(5)}>5</button>
-                    <button onClick = {() => addNum(6)}>6</button>
-                    <button onClick = {wicketNum}>wickets</button>
-                </div>
+                <ButtonFun />
+                <br/>
+                <Form />
+
 
             </>
         )
-
-
 
         const rootElement = ReactDOM.createRoot(document.getElementById("root"));
         rootElement.render(<App />);
