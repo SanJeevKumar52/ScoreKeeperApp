@@ -8,6 +8,7 @@
     <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <link rel="stylesheet" href="main.css">
 </head>
 
 <body>
@@ -20,14 +21,12 @@
         let wicket = 0;
         let ballWise = [];
         let hit = 0;
-
-
-
+        let inputref = React.createRef();
 
         function addNum(num) {
             hit = num;
             rootElement.render(<App />);
-            console.log(hit);
+            
         }
         function wicketNum() {
 
@@ -67,13 +66,27 @@
         
         function handlesubmit(event){
             event.preventDefault();
+            if(hit ==="W"){
+                wicket += 1;
+            }else{
+                score += hit;
+
+            }
+            ballWise.unshift(
+               // <span>{hit}{","}{inputref.current.value}<span>
+               <span>{`${hit}, ${inputref.current.value}`}</span>
+            );
+            hit = 0;
+            inputref.current.value = " " ;
+
+            rootElement.render(<App />);
         }
 
         const Form = () =>(
             <>
             <form onSubmit ={handlesubmit}>
                 <input value = {hit} />&nbsp;&nbsp;&nbsp;
-                <input />
+                <input ref ={inputref} placeholder = "Add comments here" />
                 <button>Submit</button>
                
             </form>
@@ -89,6 +102,9 @@
                 <ButtonFun />
                 <br/>
                 <Form />
+                {ballWise.map((res ,index)=>(
+                    <p key ={index}>{res}</p>
+                ))}
 
 
             </>
